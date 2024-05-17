@@ -5,7 +5,7 @@
 
 /**
  *
- * @author andre
+ * @author karelin
  */
 public class ProyectoKarelinGuzman {
 
