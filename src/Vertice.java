@@ -16,11 +16,11 @@ public class Vertice {
         adyacentes = new Lista();
     }
     
-    public void agregar(String letra){
+    public void agregar(Vertice letra){
         adyacentes.insertar(letra);
     }
     
-    public void eliminar(String letra){
+    public void eliminar(Vertice letra){
         adyacentes.eliminar(letra);
     }
     
