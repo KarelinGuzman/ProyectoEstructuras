@@ -21,7 +21,17 @@ public class Grafo {
         }
     }
     
-    
+    public void fijar_adyacentes(){
+        int [] indices = {-5,-4,-3,-1,1,3,4,5};
+        for (int i = 0; i < max_letras; i++) {
+            for (int j = 0; j < 8; j++) {
+                try{
+                    this.sopa[i].agregar(this.sopa[i+indices[j]]);
+                }catch(Exception e){
+                }
+            }
+        }
+    }
     
     
 }
