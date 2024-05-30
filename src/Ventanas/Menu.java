@@ -5,14 +5,18 @@
 package Ventanas;
 
 import Estructuras.Grafo;
+import Estructuras.Lista;
 import java.awt.Color;
 
 /**
  *
- * @author andre
+ * @author karelin
  */
 public class Menu extends javax.swing.JFrame {
+
     public static Grafo g;
+    public javax.swing.JTextField[] cuadros;
+
     /**
      * Creates new form Menu
      */
@@ -20,7 +24,8 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         String diccionario = "ABCDEFGHIJKLMNOP";
         this.g = new Grafo(16, "ABCDEFGHIJKLMNOP");
-        javax.swing.JTextField[] cuadros =  {this.C0, this.C1, this.C2, this.C3, this.C4, this.C5, this.C6, this.C7, this.C8, this.C9, this.C10, this.C11, this.C12, this.C13, this.C14, this.C15};
+        javax.swing.JTextField[] cuadros = {this.C0, this.C1, this.C2, this.C3, this.C4, this.C5, this.C6, this.C7, this.C8, this.C9, this.C10, this.C11, this.C12, this.C13, this.C14, this.C15};
+        this.cuadros = cuadros;
         for (int i = 0; i < 16; i++) {
             cuadros[i].setText(String.valueOf(diccionario.charAt(i)));
         }
@@ -418,13 +423,25 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String p = this.jTextField5.getText();
-        this.jTextArea1.setText(this.g.searchWord(p));
+        Lista lista = this.g.searchWord(p);
+        String recorrido = lista.imprimir();
+        for (int i = 0; i < recorrido.length(); i++) {
+            for (int j = 0; j < 16; j++) {
+                if (this.cuadros[j].getText().equals(String.valueOf(recorrido.charAt(i)))) {
+                    System.out.println("jdj");
+                    this.cuadros[j].setBackground(Color.red);
+                    break;
+                }
+            }
+
+        }
+        this.jTextArea1.setText(lista.imprimir());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
