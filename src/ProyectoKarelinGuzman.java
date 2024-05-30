@@ -14,6 +14,9 @@ public class ProyectoKarelinGuzman {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Grafo grafo = new Grafo(16, "abcdefghijklmnop");
+        grafo.mostrar();
+        System.out.println(grafo.searchWord("abeijm"));
     }
     
 }
