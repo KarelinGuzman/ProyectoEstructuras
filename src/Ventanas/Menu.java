@@ -4,6 +4,7 @@
  */
 package Ventanas;
 
+import Estructuras.Grafo;
 import java.awt.Color;
 
 /**
@@ -11,12 +12,18 @@ import java.awt.Color;
  * @author andre
  */
 public class Menu extends javax.swing.JFrame {
-
+    public static Grafo g;
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+        String diccionario = "ABCDEFGHIJKLMNOP";
+        this.g = new Grafo(16, "ABCDEFGHIJKLMNOP");
+        javax.swing.JTextField[] cuadros =  {this.C0, this.C1, this.C2, this.C3, this.C4, this.C5, this.C6, this.C7, this.C8, this.C9, this.C10, this.C11, this.C12, this.C13, this.C14, this.C15};
+        for (int i = 0; i < 16; i++) {
+            cuadros[i].setText(String.valueOf(diccionario.charAt(i)));
+        }
 //        this.jTextField1.setBackground(Color.red);
     }
 
@@ -33,316 +40,392 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        C15 = new javax.swing.JTextField();
+        C0 = new javax.swing.JTextField();
+        C1 = new javax.swing.JTextField();
+        C2 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jTextField15 = new javax.swing.JTextField();
-        jTextField16 = new javax.swing.JTextField();
+        C7 = new javax.swing.JTextField();
+        C6 = new javax.swing.JTextField();
+        C5 = new javax.swing.JTextField();
+        C4 = new javax.swing.JTextField();
+        C8 = new javax.swing.JTextField();
+        C9 = new javax.swing.JTextField();
+        C10 = new javax.swing.JTextField();
+        C11 = new javax.swing.JTextField();
+        C12 = new javax.swing.JTextField();
+        C13 = new javax.swing.JTextField();
+        C14 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        C3 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
-        jLabel1.setText("SOPA DE LETRAS");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 400, -1));
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel1.setText("Busqueda por Diccionario:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 400, 30));
 
-        jButton1.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
-        jButton1.setText("Busqueda Especifica");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 280, -1, -1));
+        jButton1.setBackground(new java.awt.Color(51, 255, 51));
+        jButton1.setFont(new java.awt.Font("Century Gothic", 3, 20)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Buscar");
+        jButton1.setAlignmentY(0.0F);
+        jButton1.setAutoscrolls(true);
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 255, 204), new java.awt.Color(153, 255, 153), new java.awt.Color(204, 255, 204), new java.awt.Color(153, 255, 153)));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 190, 100, 40));
 
         jButton2.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
-        jButton2.setText("Buscar por Diccionario");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, -1, -1));
+        jButton2.setText("GRAFICAR BFS");
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 510, -1, -1));
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("A");
-        jTextField1.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        C15.setEditable(false);
+        C15.setBackground(new java.awt.Color(255, 255, 255));
+        C15.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C15.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C15.setText("A");
+        C15.setPreferredSize(new java.awt.Dimension(64, 64));
+        C15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                C15ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, -1, -1));
+        jPanel1.add(C15, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, -1, -1));
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setText("A");
-        jTextField2.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        C0.setEditable(false);
+        C0.setBackground(new java.awt.Color(255, 255, 255));
+        C0.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C0.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C0.setText("A");
+        C0.setPreferredSize(new java.awt.Dimension(64, 64));
+        C0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                C0ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, -1, -1));
+        jPanel1.add(C0, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, -1, -1));
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("A");
-        jTextField3.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        C1.setEditable(false);
+        C1.setBackground(new java.awt.Color(255, 255, 255));
+        C1.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C1.setText("A");
+        C1.setPreferredSize(new java.awt.Dimension(64, 64));
+        C1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                C1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
+        jPanel1.add(C1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
 
-        jTextField4.setEditable(false);
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("A");
-        jTextField4.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        C2.setEditable(false);
+        C2.setBackground(new java.awt.Color(255, 255, 255));
+        C2.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C2.setText("A");
+        C2.setPreferredSize(new java.awt.Dimension(64, 64));
+        C2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                C2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, -1, -1));
+        jPanel1.add(C2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, -1, -1));
 
-        jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("A");
+        jTextField5.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField5.setPreferredSize(new java.awt.Dimension(64, 64));
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, -1));
+        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 280, 40));
 
-        jTextField6.setEditable(false);
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField6.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("A");
-        jTextField6.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        C7.setEditable(false);
+        C7.setBackground(new java.awt.Color(255, 255, 255));
+        C7.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C7.setText("A");
+        C7.setPreferredSize(new java.awt.Dimension(64, 64));
+        C7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                C7ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, -1, -1));
+        jPanel1.add(C7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, -1, -1));
 
-        jTextField7.setEditable(false);
-        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField7.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setText("A");
-        jTextField7.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        C6.setEditable(false);
+        C6.setBackground(new java.awt.Color(255, 255, 255));
+        C6.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C6.setText("A");
+        C6.setPreferredSize(new java.awt.Dimension(64, 64));
+        C6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                C6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, -1, -1));
+        jPanel1.add(C6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, -1, -1));
 
-        jTextField8.setEditable(false);
-        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField8.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setText("A");
-        jTextField8.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        C5.setEditable(false);
+        C5.setBackground(new java.awt.Color(255, 255, 255));
+        C5.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C5.setText("A");
+        C5.setPreferredSize(new java.awt.Dimension(64, 64));
+        C5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                C5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
+        jPanel1.add(C5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
 
-        jTextField9.setEditable(false);
-        jTextField9.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField9.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField9.setText("A");
-        jTextField9.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        C4.setEditable(false);
+        C4.setBackground(new java.awt.Color(255, 255, 255));
+        C4.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C4.setText("A");
+        C4.setPreferredSize(new java.awt.Dimension(64, 64));
+        C4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                C4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
+        jPanel1.add(C4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
 
-        jTextField10.setEditable(false);
-        jTextField10.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField10.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField10.setText("A");
-        jTextField10.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+        C8.setEditable(false);
+        C8.setBackground(new java.awt.Color(255, 255, 255));
+        C8.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C8.setText("A");
+        C8.setPreferredSize(new java.awt.Dimension(64, 64));
+        C8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
+                C8ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, -1, -1));
+        jPanel1.add(C8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, -1, -1));
 
-        jTextField11.setEditable(false);
-        jTextField11.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField11.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField11.setText("A");
-        jTextField11.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+        C9.setEditable(false);
+        C9.setBackground(new java.awt.Color(255, 255, 255));
+        C9.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C9.setText("A");
+        C9.setPreferredSize(new java.awt.Dimension(64, 64));
+        C9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
+                C9ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
+        jPanel1.add(C9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
-        jTextField12.setEditable(false);
-        jTextField12.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField12.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField12.setText("A");
-        jTextField12.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField12.addActionListener(new java.awt.event.ActionListener() {
+        C10.setEditable(false);
+        C10.setBackground(new java.awt.Color(255, 255, 255));
+        C10.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C10.setText("A");
+        C10.setPreferredSize(new java.awt.Dimension(64, 64));
+        C10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
+                C10ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
+        jPanel1.add(C10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
 
-        jTextField13.setEditable(false);
-        jTextField13.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField13.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField13.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField13.setText("A");
-        jTextField13.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+        C11.setEditable(false);
+        C11.setBackground(new java.awt.Color(255, 255, 255));
+        C11.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C11.setText("A");
+        C11.setPreferredSize(new java.awt.Dimension(64, 64));
+        C11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
+                C11ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
+        jPanel1.add(C11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
 
-        jTextField14.setEditable(false);
-        jTextField14.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField14.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField14.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField14.setText("A");
-        jTextField14.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField14.addActionListener(new java.awt.event.ActionListener() {
+        C12.setEditable(false);
+        C12.setBackground(new java.awt.Color(255, 255, 255));
+        C12.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C12.setText("A");
+        C12.setPreferredSize(new java.awt.Dimension(64, 64));
+        C12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField14ActionPerformed(evt);
+                C12ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
+        jPanel1.add(C12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
 
-        jTextField15.setEditable(false);
-        jTextField15.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField15.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField15.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField15.setText("A");
-        jTextField15.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField15.addActionListener(new java.awt.event.ActionListener() {
+        C13.setEditable(false);
+        C13.setBackground(new java.awt.Color(255, 255, 255));
+        C13.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C13.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C13.setText("A");
+        C13.setPreferredSize(new java.awt.Dimension(64, 64));
+        C13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField15ActionPerformed(evt);
+                C13ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
+        jPanel1.add(C13, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
 
-        jTextField16.setEditable(false);
-        jTextField16.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField16.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jTextField16.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField16.setText("A");
-        jTextField16.setPreferredSize(new java.awt.Dimension(64, 64));
-        jTextField16.addActionListener(new java.awt.event.ActionListener() {
+        C14.setEditable(false);
+        C14.setBackground(new java.awt.Color(255, 255, 255));
+        C14.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C14.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C14.setText("A");
+        C14.setPreferredSize(new java.awt.Dimension(64, 64));
+        C14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField16ActionPerformed(evt);
+                C14ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
+        jPanel1.add(C14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 420));
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Century Gothic", 2, 18)); // NOI18N
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
+        jLabel2.setText("SOPA DE LETRAS");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 400, -1));
+
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel3.setText("Diccionario:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 400, -1));
+
+        C3.setEditable(false);
+        C3.setBackground(new java.awt.Color(255, 255, 255));
+        C3.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        C3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        C3.setText("A");
+        C3.setPreferredSize(new java.awt.Dimension(64, 64));
+        C3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                C3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(C3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel4.setText("Busqueda Especifica:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 400, 30));
+
+        jButton3.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
+        jButton3.setText("Buscar por BFS");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, -1, -1));
+
+        jButton4.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
+        jButton4.setText("Buscar por DFS");
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 360, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 890, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void C15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C15ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_C15ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void C0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C0ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_C0ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void C1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_C1ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void C2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_C2ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void C7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_C7ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void C6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C6ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_C6ActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void C5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_C5ActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void C4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_C4ActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void C8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }//GEN-LAST:event_C8ActionPerformed
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+    private void C9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C9ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    }//GEN-LAST:event_C9ActionPerformed
 
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
+    private void C10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C10ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
+    }//GEN-LAST:event_C10ActionPerformed
 
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+    private void C11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C11ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
+    }//GEN-LAST:event_C11ActionPerformed
 
-    private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
+    private void C12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C12ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField14ActionPerformed
+    }//GEN-LAST:event_C12ActionPerformed
 
-    private void jTextField15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
+    private void C13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C13ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
+    }//GEN-LAST:event_C13ActionPerformed
 
-    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
+    private void C14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C14ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField16ActionPerformed
+    }//GEN-LAST:event_C14ActionPerformed
+
+    private void C3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_C3ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String p = this.jTextField5.getText();
+        this.jTextArea1.setText(this.g.searchWord(p));
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,25 +463,33 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField C0;
+    private javax.swing.JTextField C1;
+    private javax.swing.JTextField C10;
+    private javax.swing.JTextField C11;
+    private javax.swing.JTextField C12;
+    private javax.swing.JTextField C13;
+    private javax.swing.JTextField C14;
+    private javax.swing.JTextField C15;
+    private javax.swing.JTextField C2;
+    private javax.swing.JTextField C3;
+    private javax.swing.JTextField C4;
+    private javax.swing.JTextField C5;
+    private javax.swing.JTextField C6;
+    private javax.swing.JTextField C7;
+    private javax.swing.JTextField C8;
+    private javax.swing.JTextField C9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
