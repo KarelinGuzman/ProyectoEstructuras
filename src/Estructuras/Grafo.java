@@ -132,21 +132,14 @@ public class Grafo {
         return found;
 
     }
+    
 
     public boolean DFS(String word, Vertice actual) {
-        // Base case: if the word is empty, we've found a match
         if (word.length() == 0) {
 //            System.out.println("            LLEGO");
             return true;
         }
 
-        // Recursive case:
-        // 1. Mark the current node as visited
-        // 2. Get the neighbors of the current node
-        // 3. For each neighbor, if it hasn't been visited and the first letter of the word matches the neighbor's label,
-        //    recursively search for the rest of the word starting from the neighbor
-        // 4. If any recursive call returns true, return true
-        // 5. If none of the neighbors match, backtrack and return false
         actual.visitado = true;
         Nodo aux = actual.adyacentes.primero;
         while (aux != null) {
@@ -171,6 +164,51 @@ public class Grafo {
             this.sopa[i].visitado = false;
         }
     }
+    
+    public boolean buscarBFS(String word){
+        boolean found = this.BFS(word);
+        this.desmarcar();
+        return found;
+    }
+            
+    boolean BFS(String word) {
+        Lista queue = new Lista();
+        for (int i = 0; i < 16; i++) {
+            
+            if (!sopa[i].visitado && String.valueOf(word.charAt(0)).equals(sopa[i].letra)) {
+//                System.out.println( "PRIMERA"+sopa[i].letra);
+                queue.insertar(sopa[i]);
+                sopa[i].visitado = true;
+            }
+        }
+        Nodo node = queue.primero;
+        int i = 1;
 
+        while (node != null) {
+            String remainingWord = word.substring(i);
+
+            if (remainingWord.length() == 0) {
+                return true;
+            }
+
+            Nodo aux = node.getLetra().adyacentes.primero;
+            String a = aux.getLetra().letra;
+            while(aux!= null) {
+//                System.out.println(String.valueOf(remainingWord.charAt(0)) + " " + (aux.getLetra().letra) + "  " + String.valueOf(remainingWord.charAt(0)).equals(aux.getLetra().letra) + " " +(!aux.getLetra().visitado));
+
+                if (!aux.getLetra().visitado && String.valueOf(remainingWord.charAt(0)).equals(aux.getLetra().letra)) {
+//                    System.out.println("---ENTRO---");
+                    queue.insertar(aux.getLetra());
+                    aux.getLetra().visitado = true;
+                }
+                aux = aux.getSiguiente();
+            }
+//            System.out.println("FIN ADYACENTES A " + remainingWord.charAt(0));
+           node = node.getSiguiente();
+           i++;
+        }
+
+        return false;
+    }
 
 }
