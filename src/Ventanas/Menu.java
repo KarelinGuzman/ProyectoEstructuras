@@ -4,9 +4,14 @@
  */
 package Ventanas;
 
+import Estructuras.AuxiliarSopa;
 import Estructuras.Grafo;
 import Estructuras.Lista;
+import Estructuras.Vertice;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.util.Random;
 
 /**
  *
@@ -15,23 +20,104 @@ import java.awt.Color;
 public class Menu extends javax.swing.JFrame {
 
     public static Grafo g;
-    public javax.swing.JTextField[] cuadros;
+    public AuxiliarSopa[] cuadros;
+    public static String[] diccionario;
+    public static String letras;
 
     /**
      * Creates new form Menu
      */
-    public Menu() {
+    public Menu(String letras, String[] diccionario) {
         initComponents();
-        String diccionario = "ABCDEFGHIJKLMNOP";
-        this.g = new Grafo(16, "ABCDEFGHIJKLMNOP");
-        javax.swing.JTextField[] cuadros = {this.C0, this.C1, this.C2, this.C3, this.C4, this.C5, this.C6, this.C7, this.C8, this.C9, this.C10, this.C11, this.C12, this.C13, this.C14, this.C15};
-        this.cuadros = cuadros;
+        this.letras = letras;
+        this.diccionario = diccionario;
+        for (String word : this.diccionario) {
+            System.out.println(word);
+        }
+        this.g = new Grafo(16, this.letras);
+        javax.swing.JTextField[] fields = {this.C0, this.C1, this.C2, this.C3, this.C4, this.C5, this.C6, this.C7, this.C8, this.C9, this.C10, this.C11, this.C12, this.C13, this.C14, this.C15};
+        this.setVisible(true);
+        this.cuadros = new AuxiliarSopa[16];
         for (int i = 0; i < 16; i++) {
-            cuadros[i].setText(String.valueOf(diccionario.charAt(i)));
+            cuadros[i] = new AuxiliarSopa(fields[i], g.sopa[i]);
+            cuadros[i].celda.setText(String.valueOf(letras.charAt(i)));
         }
 //        this.jTextField1.setBackground(Color.red);
     }
 
+    public void mostrar(String[] diccionario) {
+        String encontradas = "";
+        for (String word : diccionario) {
+            try {
+                int red = (int) (Math.random() * 256);
+                int green = (int) (Math.random() * 256);
+                int blue = (int) (Math.random() * 256);
+                Color color = new Color(red, green, blue);
+                Lista lista = this.g.buscarDFS(word);
+                encontradas += lista.imprimir() + "\n";
+                for (int i = 0; i < word.length(); i++) {
+                    Vertice actual = lista.buscarPos(i);
+
+                    for (int j = 0; j < 16; j++) {
+//                        System.out.println(this.cuadros[j].nodo.equals(actual));
+                        if (this.cuadros[j].nodo.equals(actual)) {
+//                            System.out.println("jdj");
+                            if (this.cuadros[j].celda.getBackground().equals(Color.WHITE)) {
+                                this.cuadros[j].celda.setBackground(color);
+
+                            } else {
+                                this.cuadros[j].celda.setBackground(Color.BLACK);
+                                this.cuadros[j].celda.setForeground(Color.WHITE);
+
+                            }
+                        }
+                    }
+
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        this.jTextArea1.setText(encontradas);
+    }
+
+//    public int drawTree(Graphics g, Documento x, int x0, int x1, int y, int index) {
+//
+//        int m = (x0 + x1) / 2;
+//        g.setColor(Color.GRAY);
+//        g.fillOval(m, y, 50, 40);
+//        g.setColor(Color.lightGray);
+//        g.setFont(new Font("Arial", Font.BOLD, 20));
+//        String t = String.valueOf(x.etiqueta_de_tiempo);
+//        g.drawString(t, m + 20, y + 30);
+//        int posL = bh.indiceIzq(index);
+//        int posR = bh.indiceDer(index);
+//        if (bh.monticulo[posL] != null) {
+//            int x2 = drawTree(g, bh.monticulo[posL], x0, m, y + 50, posL);
+//            g.drawLine(m + 25, y + 40, x2 + 25, y + 50);
+//        }
+//        if (bh.monticulo[posR] != null) {
+//            int x2 = drawTree(g, bh.monticulo[posR], m, x1, y + 50, posR);
+//            g.drawLine(m + 25, y + 40, x2 + 25, y + 50);
+//        }
+//        return m;
+//    }
+//
+//    public void draw(Graphics g, int m, int y, Documento x) {
+//        g.setColor(Color.BLUE);
+//        g.fillOval(m, y, 50, 40);
+//        g.setColor(Color.lightGray);
+//        g.setFont(new Font("Arial", Font.BOLD, 20));
+//        String t = String.valueOf(x.etiqueta_de_tiempo);
+//        g.drawString(t, m + 20, y + 30);
+//    }
+//
+//    @Override
+//    public void paint(Graphics g) {
+//        super.paint(g);
+//        drawTree(g, bh.monticulo[0], 0, this.getWidth() - 25, 100, 0);
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,7 +181,12 @@ public class Menu extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
         jButton2.setText("GRAFICAR BFS");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 510, -1, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 510, -1, -1));
 
         C15.setEditable(false);
         C15.setBackground(new java.awt.Color(255, 255, 255));
@@ -149,7 +240,6 @@ public class Menu extends javax.swing.JFrame {
         });
         jPanel1.add(C2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, -1, -1));
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
         jTextField5.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField5.setPreferredSize(new java.awt.Dimension(64, 64));
@@ -346,6 +436,11 @@ public class Menu extends javax.swing.JFrame {
 
         jButton4.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
         jButton4.setText("Buscar por DFS");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 360, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 890, 610));
@@ -423,26 +518,58 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String encontradas = "";
+//        System.out.println(this.diccionario.length);
+        for (String word : this.diccionario) {
+//            if (g.buscarBFS(word)) {
+//                encontradas += word + "\n";
+//            }
+//System.out.println(word);
+if (g.buscarBFS(word)) {
+                System.out.println("                    Found: " + word);
+            } else {
+                System.out.println("                    Not found: " + word);
+            }
+        }
+        this.mostrar(this.diccionario);
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String p = this.jTextField5.getText();
-        Lista lista = this.g.searchWord(p);
+        Lista lista = this.g.buscarDFS(p);
+
+        this.jTextArea1.setText(lista.imprimir());
+
         String recorrido = lista.imprimir();
+        for (int i = 0; i < 16; i++) {
+            this.cuadros[i].celda.setBackground(Color.WHITE);
+            this.cuadros[i].celda.setForeground(Color.BLACK);
+        }
         for (int i = 0; i < recorrido.length(); i++) {
+            Vertice actual = lista.buscarPos(i);
             for (int j = 0; j < 16; j++) {
-                if (this.cuadros[j].getText().equals(String.valueOf(recorrido.charAt(i)))) {
+                if (this.cuadros[j].nodo.equals(actual)) {
                     System.out.println("jdj");
-                    this.cuadros[j].setBackground(Color.red);
+                    this.cuadros[j].celda.setBackground(Color.red);
                     break;
                 }
             }
 
         }
-        this.jTextArea1.setText(lista.imprimir());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.mostrar(this.diccionario);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -474,7 +601,7 @@ public class Menu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu().setVisible(true);
+                new Menu(letras, diccionario).setVisible(true);
             }
         });
     }
