@@ -115,13 +115,15 @@ public class Grafo {
 
     }
 
-    public boolean buscarDFS(String word) {
+    public Lista buscarDFS(String word) {
         boolean found = false;
         int index = 0;
+        Lista vertices = new Lista();
         while (index < this.max_letras) {
             if (this.sopa[index].letra.equals(String.valueOf(word.charAt(0)))) {
-                found = this.DFS(word.substring(1), this.sopa[index]);
-                if (found) {
+
+                vertices = this.DFS(word.substring(1), this.sopa[index], vertices, word.length());
+                if (vertices.tamano == word.length()) {
                     break;
                 }
             }
@@ -129,34 +131,38 @@ public class Grafo {
             index++;
         }
         this.desmarcar();
-        return found;
+        return vertices;
 
     }
-    
 
-    public boolean DFS(String word, Vertice actual) {
+    public Lista DFS(String word, Vertice actual, Lista vertices, int tamano) {
         if (word.length() == 0) {
 //            System.out.println("            LLEGO");
-            return true;
+            vertices.insertar(actual);
+            return vertices;
         }
-
+        Lista n = new Lista();
         actual.visitado = true;
         Nodo aux = actual.adyacentes.primero;
         while (aux != null) {
 //            System.out.println(String.valueOf(word.charAt(0)) + " " + (aux.getLetra().letra) + "  " + String.valueOf(word.charAt(0)).equals(aux.getLetra().letra) + " " +(!aux.getLetra().visitado));
             if (!aux.getLetra().visitado && String.valueOf(word.charAt(0)).equals(aux.getLetra().letra)) {
 //                System.out.println("                entro  " + word);
+                if (!vertices.buscar(actual)) {
+                    vertices.insertar(actual);
 
-                if (DFS(word.substring(1), aux.getLetra())) {
-//                    System.out.println("                retorna");
+                }
+                n = DFS(word.substring(1), aux.getLetra(), vertices, tamano);
+                if (n.tamano == tamano) {
+                    System.out.println("                retorna");
 
-                    return true;
+                    return n;
                 }
             }
             aux = aux.getSiguiente();
         }
         actual.visitado = false;
-        return false;
+        return n;
     }
 
     public void desmarcar() {
@@ -164,16 +170,18 @@ public class Grafo {
             this.sopa[i].visitado = false;
         }
     }
-    
-    public boolean buscarBFS(String word){
+
+    public boolean buscarBFS(String word) {
         boolean found = this.BFS(word);
         this.desmarcar();
         return found;
     }
-            
-    boolean BFS(String word) {
+
+    public boolean BFS(String word) {
         Lista queue = new Lista();
+//        Lista recorrido = new Lista();
         for (int i = 0; i < 16; i++) {
+//            System.out.println(i);
             
             if (!sopa[i].visitado && String.valueOf(word.charAt(0)).equals(sopa[i].letra)) {
 //                System.out.println( "PRIMERA"+sopa[i].letra);
@@ -185,27 +193,37 @@ public class Grafo {
         int i = 1;
 
         while (node != null) {
-            String remainingWord = word.substring(i);
-
+            String remainingWord = "";
+//            try{
+             remainingWord = word.substring(i);
+//            }
+//            catch(Exception e){
+//                return true;
+//            }
             if (remainingWord.length() == 0) {
+//                recorrido.insertar(node.getLetra());
+
                 return true;
             }
 
             Nodo aux = node.getLetra().adyacentes.primero;
             String a = aux.getLetra().letra;
-            while(aux!= null) {
+            while (aux != null) {
 //                System.out.println(String.valueOf(remainingWord.charAt(0)) + " " + (aux.getLetra().letra) + "  " + String.valueOf(remainingWord.charAt(0)).equals(aux.getLetra().letra) + " " +(!aux.getLetra().visitado));
 
                 if (!aux.getLetra().visitado && String.valueOf(remainingWord.charAt(0)).equals(aux.getLetra().letra)) {
 //                    System.out.println("---ENTRO---");
+//                    if (!recorrido.buscar(node.getLetra())) {
+//                        recorrido.insertar(node.getLetra());
+//                    }
                     queue.insertar(aux.getLetra());
                     aux.getLetra().visitado = true;
                 }
                 aux = aux.getSiguiente();
             }
 //            System.out.println("FIN ADYACENTES A " + remainingWord.charAt(0));
-           node = node.getSiguiente();
-           i++;
+            node = node.getSiguiente();
+            i++;
         }
 
         return false;
