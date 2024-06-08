@@ -7,11 +7,18 @@ package Ventanas;
 import Estructuras.AuxiliarSopa;
 import Estructuras.Grafo;
 import Estructuras.Lista;
+import Estructuras.Nodo;
 import Estructuras.Vertice;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
+import javax.swing.JOptionPane;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
 
 /**
  *
@@ -32,7 +39,7 @@ public class Menu extends javax.swing.JFrame {
         this.letras = letras;
         this.diccionario = diccionario;
         for (String word : this.diccionario) {
-            System.out.println(word);
+            this.dictionary.setText(this.dictionary.getText() + word + "\n");
         }
         this.g = new Grafo(16, this.letras);
         javax.swing.JTextField[] fields = {this.C0, this.C1, this.C2, this.C3, this.C4, this.C5, this.C6, this.C7, this.C8, this.C9, this.C10, this.C11, this.C12, this.C13, this.C14, this.C15};
@@ -54,7 +61,9 @@ public class Menu extends javax.swing.JFrame {
                 int blue = (int) (Math.random() * 256);
                 Color color = new Color(red, green, blue);
                 Lista lista = this.g.buscarDFS(word);
-                encontradas += lista.imprimir() + "\n";
+                if (lista.imprimir() != null) {
+                    encontradas += lista.imprimir() + "\n";
+                }
                 for (int i = 0; i < word.length(); i++) {
                     Vertice actual = lista.buscarPos(i);
 
@@ -79,45 +88,48 @@ public class Menu extends javax.swing.JFrame {
                 System.out.println(e);
             }
         }
+
         this.jTextArea1.setText(encontradas);
     }
 
-//    public int drawTree(Graphics g, Documento x, int x0, int x1, int y, int index) {
-//
-//        int m = (x0 + x1) / 2;
-//        g.setColor(Color.GRAY);
-//        g.fillOval(m, y, 50, 40);
-//        g.setColor(Color.lightGray);
-//        g.setFont(new Font("Arial", Font.BOLD, 20));
-//        String t = String.valueOf(x.etiqueta_de_tiempo);
-//        g.drawString(t, m + 20, y + 30);
-//        int posL = bh.indiceIzq(index);
-//        int posR = bh.indiceDer(index);
-//        if (bh.monticulo[posL] != null) {
-//            int x2 = drawTree(g, bh.monticulo[posL], x0, m, y + 50, posL);
-//            g.drawLine(m + 25, y + 40, x2 + 25, y + 50);
-//        }
-//        if (bh.monticulo[posR] != null) {
-//            int x2 = drawTree(g, bh.monticulo[posR], m, x1, y + 50, posR);
-//            g.drawLine(m + 25, y + 40, x2 + 25, y + 50);
-//        }
-//        return m;
-//    }
-//
-//    public void draw(Graphics g, int m, int y, Documento x) {
-//        g.setColor(Color.BLUE);
-//        g.fillOval(m, y, 50, 40);
-//        g.setColor(Color.lightGray);
-//        g.setFont(new Font("Arial", Font.BOLD, 20));
-//        String t = String.valueOf(x.etiqueta_de_tiempo);
-//        g.drawString(t, m + 20, y + 30);
-//    }
-//
-//    @Override
-//    public void paint(Graphics g) {
-//        super.paint(g);
-//        drawTree(g, bh.monticulo[0], 0, this.getWidth() - 25, 100, 0);
-//    }
+    public void graficarArbol(Lista lista) {
+        // Creamos un grafo dirigido
+        Graph graph = new SingleGraph("Árbol");
+
+        // Establecemos el estilo del grafo
+        graph.setAttribute("ui.stylesheet", "node { fill-color: white; stroke-mode: plain; stroke-color: black; stroke-width: 2px; size: 30px; } edge { fill-color: black; stroke-mode: plain; stroke-color: black; stroke-width: 2px; }");
+
+        // Creamos un contador para asignar IDs únicos a cada nodo
+        int contador = 0;
+
+        // Agregamos los nodos del árbol al grafo
+        Nodo nodoActual = lista.primero;
+        while (nodoActual != null) {
+            String nodeId = "N" + contador++;
+            graph.addNode(nodeId);
+            graph.getNode(nodeId).setAttribute("label", nodoActual.getLetra().letra);
+            graph.getNode(nodeId).setAttribute("ui.label", nodoActual.getLetra().letra);
+            graph.getNode(nodeId).setAttribute("ui.class", "nodo");
+            nodoActual = nodoActual.getSiguiente();
+        }
+        contador = 0;
+        // Agregamos las aristas entre los nodos
+        nodoActual = lista.primero;
+        while (nodoActual != null) {
+            if (nodoActual.getSiguiente() != null) {
+                String nodeId = "N" + contador;
+                String siguienteNodeId = "N" + (contador + 1);
+                graph.addEdge(nodeId + "->" + siguienteNodeId, nodeId, siguienteNodeId);
+            }
+            nodoActual = nodoActual.getSiguiente();
+            contador++;
+        }
+        System.setProperty("org.graphstream.ui", "swing");
+
+        // Mostramos el grafo
+        graph.display();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,7 +142,6 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         C15 = new javax.swing.JTextField();
         C0 = new javax.swing.JTextField();
         C1 = new javax.swing.JTextField();
@@ -155,6 +166,10 @@ public class Menu extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        dictionary = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -178,15 +193,6 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 190, 100, 40));
-
-        jButton2.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
-        jButton2.setText("GRAFICAR BFS");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 510, -1, -1));
 
         C15.setEditable(false);
         C15.setBackground(new java.awt.Color(255, 255, 255));
@@ -398,7 +404,7 @@ public class Menu extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 470, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
         jLabel2.setText("SOPA DE LETRAS");
@@ -406,7 +412,7 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel3.setText("Diccionario:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 400, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 400, -1));
 
         C3.setEditable(false);
         C3.setBackground(new java.awt.Color(255, 255, 255));
@@ -421,9 +427,9 @@ public class Menu extends javax.swing.JFrame {
         });
         jPanel1.add(C3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel4.setText("Busqueda Especifica:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 400, 30));
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 10)); // NOI18N
+        jLabel4.setText("Los cuadros en negro representa que son utilizados por mas de una palabra");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 940, 30));
 
         jButton3.setFont(new java.awt.Font("Century Gothic", 3, 18)); // NOI18N
         jButton3.setText("Buscar por BFS");
@@ -442,6 +448,20 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 360, -1, -1));
+
+        dictionary.setColumns(20);
+        dictionary.setRows(5);
+        jScrollPane2.setViewportView(dictionary);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 360, 130));
+
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel5.setText("Encontradas:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, 400, -1));
+
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel6.setText("Busqueda Especifica:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 400, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 890, 610));
 
@@ -519,27 +539,38 @@ public class Menu extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String encontradas = "";
+        long inicio = System.nanoTime();
+
 //        System.out.println(this.diccionario.length);
         for (String word : this.diccionario) {
 //            if (g.buscarBFS(word)) {
 //                encontradas += word + "\n";
 //            }
 //System.out.println(word);
-if (g.buscarBFS(word)) {
+            if (g.buscarBFS(word)) {
                 System.out.println("                    Found: " + word);
             } else {
                 System.out.println("                    Not found: " + word);
             }
         }
         this.mostrar(this.diccionario);
+        long termina = System.nanoTime();
+
+        long tFinal = termina - inicio;
+        this.jTextArea1.setText(this.jTextArea1.getText() + "-------------\nTiempo:" + (tFinal / 1_000_000) + " milisegundos");
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String p = this.jTextField5.getText();
+        try{
+        String p = this.jTextField5.getText().toUpperCase();
+        if(p.length() > 2){
         Lista lista = this.g.buscarDFS(p);
+        if (lista.imprimir() != null) {
+            graficarArbol(lista);
 
+        }
         this.jTextArea1.setText(lista.imprimir());
 
         String recorrido = lista.imprimir();
@@ -556,20 +587,24 @@ if (g.buscarBFS(word)) {
                     break;
                 }
             }
-
+        }
+        }else{
+             JOptionPane.showMessageDialog(rootPane, "Introduzca una palabra con al menos 3 letras");
+ 
+        }}catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "Introduzca una palabra valida");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        long inicio = System.nanoTime();
+
         this.mostrar(this.diccionario);
+        long termina = System.nanoTime();
+        long tFinal = termina - inicio;
+        this.jTextArea1.setText(this.jTextArea1.getText() + "-------------\nTiempo:" + (tFinal / 1_000_000) + " milisegundos");
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -623,16 +658,19 @@ if (g.buscarBFS(word)) {
     private javax.swing.JTextField C7;
     private javax.swing.JTextField C8;
     private javax.swing.JTextField C9;
+    private javax.swing.JTextArea dictionary;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables

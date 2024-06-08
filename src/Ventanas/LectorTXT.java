@@ -125,7 +125,7 @@ public class LectorTXT extends javax.swing.JFrame {
                     }
                     br.close();
                     lineas = datos_txt.split(",");
-                    System.out.println(datos_txt);
+//                    System.out.println(datos_txt);
                     this.diccionario = lineas;
                     JOptionPane.showMessageDialog(null, "Se ha leido el archivo");
                     Menu m = new Menu(this.letras, this.diccionario);
